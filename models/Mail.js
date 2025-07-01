@@ -7,7 +7,7 @@ let Mail = function(data) {
 	this.errors = [];
 };
 
-User.prototype.cleanUp = function () {
+Mail.prototype.cleanUp = function () {
 	if (typeof(this.data.nombre) != "string") {this.data.nombre = ""};
 	if (typeof(this.data.email) != "string") {this.data.email = ""};
 	if (typeof(this.data.descripcion) != "string") {this.data.descripcion = ""};
