@@ -7,6 +7,18 @@ let Mail = function(data) {
 	this.errors = [];
 };
 
+User.prototype.cleanUp = function () {
+	if (typeof(this.data.nombre) != "string") {this.data.nombre = ""};
+	if (typeof(this.data.email) != "string") {this.data.email = ""};
+	if (typeof(this.data.descripcion) != "string") {this.data.descripcion = ""};
+	// get rid of any bogus properties
+	this.data = {
+    nombre: this.data.nombre.trim(),
+		email: this.data.email.trim().toLowerCase(),
+		descripcion: this.data.descripcion.trim()
+	}
+}
+
 Mail.prototype.validate = function () {
   if (this.data.nombre == "") {this.errors.push("Por favor introduzca su nombre completo.")};
   if (this.data.nombre != "" && !validator.isAlphanumeric(this.data.nombre)) {this.errors.push("El nombre completo solo puede contener letras.")}
@@ -18,6 +30,7 @@ Mail.prototype.validate = function () {
 
 
 Mail.prototype.enviar = async function () {
+	this.cleanUp();
   this.validate();
 
   const transporter = nodemailer.createTransport({
